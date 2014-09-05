@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Equal Height Children</title>
+  <meta name="generator" content="TextMate http://macromates.com/">
+  <!-- 6/5/13 -->
+  <meta name="author" content="Benjamin Steyaert">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="underscore.throttle.js" type="text/javascript"></script>
+  <script src="jquery.equalize-children.js" type="text/javascript"></script>
+
+  <style>
+    .left   {float:left;}
+    .orange {background-color:orange; border:solid 1px black;}
+    .blue  {background-color:lightblue; border:solid 1px black;}
+    .green  {background-color:lightgreen; border:solid 1px black;}
+    .gray  {background-color:lightgray; border:solid 1px black;}
+
+    h2      {clear:both; margin:20px 0px 5px 0px; }
+    .col    {width:49%;}
+
+    .clearfix:before,.clearfix:after {content: " "; display: table;}
+    .clearfix:after                  {clear: both;}
+
+    /* Screen width debugging statements */
+    .screen-debug:after     {content: "SCREEN 1 (320px)";}
+    @media all and (min-width: 480px) and (max-width: 767px) {
+      .screen-debug:after   {content: "SCREEN 2 (480px)";}
+    }
+    @media all and (min-width: 768px) and (max-width: 989px) {
+      .screen-debug:after   {content: "SCREEN 3 (768px)";}
+    }
+    @media all and (min-width: 990px) {
+      .screen-debug:after   {content: "SCREEN 4 (990px)";}
+    }
+
+  </style>
+</head>
+<body>
+    Debug: Breakpoint = <span class="screen-debug">&nbsp;</span>
+    <h2>Equalize children in 1 group</h2>
+    <div class="equalize-children clearfix">
+      <div class="equalize-group-paragraph col left orange">Child 1<br><br>Paragraph 1 text here text here text here text here text here text here text here text here text here text here text here<br>Paragraph 2 text here text here text here text here text here text here text here text here text here text here text here</div>
+      <div class="equalize-group-paragraph col left orange">Child 2<br><br>Paragraph 1 text here<br>Paragraph 2 text here<br></div>
+    </div>
+
+    <h2>Equalize children in 3 groups</h2>
+    <div class="equalize-children clearfix">
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>
+        <div class="equalize-group-1 left blue">GROUP 1 with<br>two line text</div>
+        <div class="equalize-group-2 left green">GROUP 2 with<br>three line<br>text</div>
+      </div>
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>
+        <div class="equalize-group-1 left blue">GROUP 1 with<br>four<br>line<br>text</div>
+        <div class="equalize-group-2 left green">GROUP 2 with<br>five<br>lines<br>of<br>text</div>
+      </div>
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>Line 1<br>Line 2
+      </div>
+   </div>
+
+    <h2>Equalize children in 3 groups, nested heights</h2>
+    <div class="equalize-children clearfix">
+      <div class="equalize-group-4 left gray">
+        <div>GROUP 4</div>
+        <div class="equalize-group-3 left orange">
+          <div>GROUP 3</div>
+          <div class="equalize-group-1 blue">GROUP 1 with<br>two line text</div>
+          <div class="equalize-group-2 green">GROUP 2 with<br>five<br>lines<br>of<br>text</div>
+          <div>text here<br>text here<br>text here</div>
+        </div>
+      </div>
+      <div class="equalize-group-4 gray left">
+        <div>GROUP 4</div>
+        <div class="equalize-group-3 left orange">
+          <div>GROUP 3</div>
+          <div class="equalize-group-1 blue">GROUP 1 with<br>four<br>line<br>text</div>
+          <div class="equalize-group-2 green">GROUP 2 with<br>three line<br>text</div>
+          <div>text here</div>
+        </div>
+      </div>
+      <div class="equalize-group-4 left gray">
+        <div>GROUP 4</div>
+        <div class="equalize-group-3 left orange">
+          <div>GROUP 3</div>Line 1<br>Line 2
+        </div>
+        <div>text here<br>text here<br>text here</div>
+      </div>
+   </div>
+
+    <hr>
+    <h1>RWD Tests</h1>
+    Debug: Breakpoint = <span class="screen-debug">&nbsp;</span>
+
+    <h2>RWD - Equalize direct children at screen 1 and 2</h2>
+    <div class="equalize-children equalize-children-rwd-scr1-scr2 clearfix">
+      <div class="equalize-group-paragraph col left orange">Child 1<br><br>Paragraph 1 text here text here text here text here text here text here text here text here text here text here text here<br>Paragraph 2 text here text here text here text here text here text here text here text here text here text here text here<br>Paragraph 3 text here text here text here text here text here text here text here text here text here text here text here</div>
+      <div class="equalize-group-paragraph col left orange">Child 2<br><br>Paragraph 1 text here<br>Paragraph 2 text here<br></div>
+    </div>
+
+    <h2>RWD - Equalize direct children with hardcoded initial heights at screen 3 and 4</h2>
+    <div class="equalize-children equalize-children-rwd-scr3-scr4 clearfix">
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>
+        <div class="equalize-group-1 left blue">  GROUP 1 with<br>two line text</div>
+        <div class="equalize-group-2 left green">GROUP 2 with<br>three line<br>text</div>
+      </div>
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>
+        <div class="equalize-group-1 left blue">GROUP 1 with<br>four<br>line<br>text</div>
+        <div class="equalize-group-2 left green">GROUP 2 with<br>five<br>lines<br>of<br>text</div>
+      </div>
+      <div class="left equalize-group-3 orange">
+        <div>GROUP 3</div>Line 1<br>Line 2
+      </div>
+    </div>
+
+    <h2>RWD - Equalize group 1 at screen 1 and 2 and group 2 at screen 3 and 4 </h2>
+    <div class="equalize-children equalize-children-groupprefix-group1 equalize-children-rwd-scr1-scr2 clearfix">
+      <div class="equalize-children equalize-children-groupprefix-group2 equalize-children-rwd-scr3-scr4 clearfix">
+        <div class="equalize-group-group1-1 left orange">
+          GROUP 1
+          <div class="equalize-group-group2-2 blue">
+            GROUP 2 with<br>two line text
+          </div>
+          text<br>text<br>text<br>text<br>text<br>text<br>text<br>text<br>text<br>text<br>text<br>text<br>text
+        </div>
+        <div class="equalize-group-group1-1 left orange">
+          GROUP 1
+          <div class="equalize-group-group2-2 blue">
+            GROUP 2<br>with<br>five<br>line<br>text
+          </div>
+          text<br>text
+        </div>
+      </div>
+    </div>
+</body>
+</html>
